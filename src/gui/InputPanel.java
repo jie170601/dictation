@@ -21,6 +21,8 @@ import javax.swing.JTextArea;
  */
 public class InputPanel extends JPanel{
 	
+	public static JTextArea area;
+	
 	/**
 	 * 使用边界布局，上面是固定高度的操作提示框
 	 * 下面是可变高度的单词输入框
@@ -77,7 +79,7 @@ public class InputPanel extends JPanel{
 	 * @return
 	 */
 	private JScrollPane createArea() {
-		JTextArea area = new JTextArea();
+		area = new JTextArea();
 		area.setLineWrap(true);
 		area.setWrapStyleWord(true);
 		area.setFont(area.getFont().deriveFont(18f));

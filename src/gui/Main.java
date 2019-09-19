@@ -2,24 +2,42 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
+
+import bean.Param;
+import lame.MP32PCM;
+import lame.PCM;
+import util.Config;
 
 public class Main extends JFrame{
+	
+	public static Param param = null;
 	
 	/**
 	 * 程序入口
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new Main();
+//		new Main();
+		MP32PCM.exeCmd("cmd ./lib/lame.exe --decode -t ./tmp/0.mp3 ./tmp/0.mp3.pcm \r\n");
 	}
 	
 	public Main() {
 		super();
+		
+		try {
+			param = Config.findParam();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//加载系统参数
+		//根据参数初始化系统
+		
 		this.setTitle("单词听写桌面版");
 		Dimension size = getToolkit().getScreenSize();
 		this.setSize(650,400);
@@ -42,6 +60,8 @@ public class Main extends JFrame{
 	    this.add(createBlank(10,10),BorderLayout.EAST);
 	    
 		this.setVisible(true);
+		
+		this.addWindowListener(new MainWindowListener(param));
 	}
 	
 	/**
@@ -56,6 +76,65 @@ public class Main extends JFrame{
 		panel.setSize(width, height);
 		panel.setPreferredSize(new Dimension(width,height));
 		return panel;
+	}
+	
+	
+}
+
+class MainWindowListener implements WindowListener{
+	
+	private Param param = null;
+	
+	public MainWindowListener(Param param) {
+		this.param = param;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * 程序关闭之前将系统参数保存到配置文件
+	 */
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		try {
+			Config.saveParam(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

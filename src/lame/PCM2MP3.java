@@ -12,13 +12,13 @@ public class PCM2MP3 {
 	private static String path = "./tmp/";
 	private static String mergedFile = "merged.pcm";
 	
-	public static void toMP3() {
-		String cmd = "./lib/lame.exe -r -s 16 --resample 16 -m m ";
+	public static void toMP3(String fileName) {
+		String cmd = "./lib/lame.exe -r -s 44.1 --resample 16 -m m ";
 		StringBuilder builder = new StringBuilder(cmd);
 		builder.append(path);
 		builder.append(mergedFile);
-		builder.append(" ./tmp/");
-		builder.append("megred.mp3");
+		builder.append(" ");
+		builder.append(fileName);
 		String cmdCode = builder.toString();
 		exeCmd(cmdCode);
 	}
@@ -36,6 +36,7 @@ public class PCM2MP3 {
 			StringBuilder sb = new StringBuilder();
 			while ((line = br.readLine()) != null) {
 				sb.append(line);
+				System.out.println(line);
 				sb.append("\n");
 			}
 			System.out.println(sb.toString());

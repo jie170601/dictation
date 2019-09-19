@@ -31,15 +31,22 @@ public class OperatePanel extends JPanel{
 	private LabelComponent interval;
 	private LabelComponent pause;
 	
+	public JSlider loopSlider;
+	public JSlider intervalSlider;
+	public JSlider pauseSlider;
+	
+	public JCheckBox randomBox;
+	public JCheckBox americanBox;
+	
 	public OperatePanel() {
 		super(new BorderLayout());
 		this.setPreferredSize(new Dimension(300,0));
 		loop = new LabelComponent();
 		interval = new LabelComponent();
 		pause = new LabelComponent();
-		loop.setValue(1);
-		interval.setValue(1);
-		pause.setValue(1);
+		loop.setValue(Main.param.getLoop());
+		interval.setValue(Main.param.getInterval());
+		pause.setValue(Main.param.getPause());
 		update();
 		add(createParam(),BorderLayout.NORTH);
 		add(createConfirm(),BorderLayout.SOUTH);
@@ -52,13 +59,19 @@ public class OperatePanel extends JPanel{
 	private JPanel createParam() {
 		JPanel panel = new JPanel(new GridLayout(8,1));
 		
-		JSlider loopSlider = new JSlider(1,10,1);
-		JSlider intervalSlider = new JSlider(1,10,1);
-		JSlider pauseSlider = new JSlider(1,10,1);
+		loopSlider = new JSlider(1,10,loop.getValue());
+		intervalSlider = new JSlider(0,10,interval.getValue());
+		pauseSlider = new JSlider(0,10,pause.getValue());
+		
+		randomBox = createCheckBox("随机播放",Main.param.isRandom());
+		americanBox = createCheckBox("美式发音",Main.param.isAmerican());
 		
 		loopSlider.addChangeListener(new SliderChangeListener(loop,loopSlider,this));
 		intervalSlider.addChangeListener(new SliderChangeListener(interval,intervalSlider,this));
 		pauseSlider.addChangeListener(new SliderChangeListener(pause,pauseSlider,this));
+		
+		randomBox.addActionListener(new CheckBoxListener(this));
+		americanBox.addActionListener(new CheckBoxListener(this));
 		
 		panel.setPreferredSize(new Dimension(0,250));
 		panel.add(loop.getLabel());
@@ -67,8 +80,8 @@ public class OperatePanel extends JPanel{
 		panel.add(intervalSlider);
 		panel.add(pause.getLabel());
 		panel.add(pauseSlider);
-		panel.add(createCheckBox("随机播放"));
-		panel.add(createCheckBox("美式发音"));
+		panel.add(randomBox);
+		panel.add(americanBox);
 		return panel;
 	}
 	
@@ -81,15 +94,7 @@ public class OperatePanel extends JPanel{
 		JButton button = new JButton("生成音频");
 		panel.setPreferredSize(new Dimension(0,55));
 		button.setFont(button.getFont().deriveFont(18f));
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser chooser = new JFileChooser(new File("./"));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("MPEG-2 Layout 3 file","mp3");
-				chooser.setFileFilter(filter);
-				chooser.showSaveDialog(new JLabel());
-			}
-		});
+		button.addActionListener(new MainButtonListener());
 		panel.add(button);
 		return panel;
 	}
@@ -116,8 +121,8 @@ public class OperatePanel extends JPanel{
 		return label;
 	}
 	
-	private JCheckBox createCheckBox(String text) {
-		JCheckBox checkBox = new JCheckBox(text);
+	private JCheckBox createCheckBox(String text,boolean selected) {
+		JCheckBox checkBox = new JCheckBox(text,selected);
 		checkBox.setFont(checkBox.getFont().deriveFont(20f).deriveFont(Font.PLAIN));
 		return checkBox;
 	}
@@ -176,7 +181,44 @@ class SliderChangeListener implements ChangeListener{
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		label.setValue(slider.getValue());
+		Object source = e.getSource();
+		byte value = (byte)slider.getValue();
+		label.setValue(value);
 		panel.update();
+		if(source==panel.loopSlider) {
+			Main.param.setLoop(value);
+		}
+		if(source==panel.intervalSlider) {
+			Main.param.setInterval(value);
+		}
+		if(source==panel.pauseSlider) {
+			Main.param.setPause(value);
+		}
 	}
+}
+
+/**
+ * checkbox改变事件处理
+ * @author 邓集阶
+ *
+ */
+class CheckBoxListener implements ActionListener{
+	
+	private OperatePanel panel;
+	
+	public CheckBoxListener(OperatePanel panel) {
+		this.panel = panel;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if(source==panel.randomBox) {
+			Main.param.setRandom(panel.randomBox.isSelected());
+		}
+		if(source==panel.americanBox) {
+			Main.param.setAmerican(panel.americanBox.isSelected());
+		}
+	}
+	
 }

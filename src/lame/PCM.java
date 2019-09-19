@@ -46,7 +46,7 @@ public class PCM {
 	private static byte[] readFile(String fileStr) throws Exception {
 		byte[] buffer = new byte[1024];
 		int len = 0;
-		File file = new File(path+fileStr);
+		File file = new File(fileStr);
 		FileInputStream inputStream = new FileInputStream(file);
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		while ((len = inputStream.read(buffer)) != -1) {

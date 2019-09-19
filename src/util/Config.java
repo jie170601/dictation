@@ -15,7 +15,7 @@ public class Config {
 	private final static String configFile = "./.config";
 	
 	/**
-	 * 从配置文件中读取参数
+	 * 将参数的改动保存到配置文件中
 	 * @throws Exception
 	 */
 	public static void saveParam(Param param) throws Exception{
@@ -25,7 +25,7 @@ public class Config {
 	}
 	
 	/**
-	 * 将参数的改动保存到配置文件中
+	 * 从配置文件中读取参数
 	 * @return
 	 * @throws Exception
 	 */

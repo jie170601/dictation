@@ -21,12 +21,16 @@ public class Url2Mp3 {
 	/**
 	 * 下载所有音频文件到临时文件夹
 	 * @param urls
+	 * @return
 	 * @throws Exception
 	 */
-	public static void download(String[] urls) throws Exception {
+	public static String[] download(String[] urls) throws Exception {
+		String[] files = new String[urls.length];
 		for(int i=0;i<urls.length;i++) {
+			files[i] = tempPath+i+".mp3";
 			download(urls[i],i+".mp3");
 		}
+		return files;
 	}
 	
 	/**
@@ -37,6 +41,7 @@ public class Url2Mp3 {
 	 */
 	private static void download(String urlStr,String fileName) throws Exception{
 		URL url = new URL(urlStr);
+		System.out.println(urlStr);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         //设置超时间为3秒
         conn.setConnectTimeout(3*1000);
