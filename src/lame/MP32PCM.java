@@ -56,15 +56,16 @@ public class MP32PCM {
 	 * ÷¥––cmd√¸¡Ó
 	 * @param cmdCode
 	 */
-	private static String exeCmd(String cmdCode) {
+	private static void exeCmd(String cmdCode) {
 		BufferedReader br = null;
-		String line = null;
 		try {
 			Process p = Runtime.getRuntime().exec(cmdCode);
-			p.destroy();
+			br = new BufferedReader(new InputStreamReader(p.getInputStream(), "GBK"));
+			String line;
+			StringBuilder sb = new StringBuilder();
+			while ((line = br.readLine()) != null) {}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return line;
 	}
 }

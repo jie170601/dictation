@@ -41,7 +41,6 @@ public class Url2Mp3 {
 	 */
 	private static void download(String urlStr,String fileName) throws Exception{
 		URL url = new URL(urlStr);
-		System.out.println(urlStr);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         //设置超时间为3秒
         conn.setConnectTimeout(3*1000);

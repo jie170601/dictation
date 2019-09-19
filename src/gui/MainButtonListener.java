@@ -2,13 +2,11 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.Popup;
 
 import com.csvreader.CsvReader;
 
@@ -38,20 +36,23 @@ public class MainButtonListener implements ActionListener{
 		//文件选择器初始路径为项目所在路径
 		//本来打算做成保存上一次选择路径的
 		//但是没有做了
-		JFileChooser chooser = new JFileChooser(new File("./"));
-		//默认选择mp3后缀的文件
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3文件","mp3");
-		chooser.setFileFilter(filter);
-		int returnValue = chooser.showSaveDialog(null);
-		if(returnValue==JFileChooser.APPROVE_OPTION) {
-			String fileName = chooser.getSelectedFile().getAbsolutePath();
-			try {
-				createAudio(fileName);
-				InputPanel.area.setText("音频生成成功，路径为:\r\n"+fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+
+//		JOptionPane.showMessageDialog(null, "音频生产成功，路径为：\r\n顶顶顶顶顶","成功",JOptionPane.INFORMATION_MESSAGE);
+		new Popup();
+//		JFileChooser chooser = new JFileChooser(new File("./"));
+//		//默认选择mp3后缀的文件
+//		FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3文件","mp3");
+//		chooser.setFileFilter(filter);
+//		int returnValue = chooser.showSaveDialog(null);
+//		if(returnValue==JFileChooser.APPROVE_OPTION) {
+//			String fileName = chooser.getSelectedFile().getAbsolutePath();
+//			try {
+//				createAudio(fileName);
+//				InputPanel.area.setText("音频生成成功，路径为:\r\n"+fileName);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 	
 	private void createAudio(String fileName) throws Exception{
