@@ -63,6 +63,7 @@ public class MainButtonListener implements ActionListener{
 		String[] urls = getUrls(words);
 		String[] files = Url2Mp3.download(urls);
 		//将mpeg-2 layout 3格式的音频文件转为pcm格式的
+		files = MP32PCM.resample(files);
 		files = MP32PCM.toPCM(files);
 		//生成空白的音频数据
 		byte[] interval = Silence.pcm(Main.param.getInterval());

@@ -22,8 +22,7 @@ public class Main extends JFrame{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		new Main();
-		MP32PCM.exeCmd("cmd ./lib/lame.exe --decode -t ./tmp/0.mp3 ./tmp/0.mp3.pcm \r\n");
+		new Main();
 	}
 	
 	public Main() {
