@@ -82,7 +82,7 @@ public class InputPanel extends JPanel{
 		area = new JTextArea();
 		area.setLineWrap(true);
 		area.setWrapStyleWord(true);
-		area.setFont(area.getFont().deriveFont(18f));
+		area.setFont(area.getFont().deriveFont(Main.FONT_SIZE));
 		area.setMargin(new Insets(10, 10, 10, 10));
 		return new JScrollPane(area);
 	}

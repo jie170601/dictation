@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import gui.CallBack;
+
 /**
  * pcm文件合并类
  * 将多个pcm文件合并成一个pcm
@@ -21,6 +23,10 @@ public class PCM {
 	
 	public static void merge(String[] files,int loop,byte[] pause,byte[] interval) throws Exception {
 		List<Byte> byteList = new ArrayList<Byte>();
+		//在开始延时interval秒，用来做听写准备
+		for(int j=0;j<interval.length;j++) {
+			byteList.add(interval[j]);
+		}
 		for(int i=0;i<files.length;i++) {
 			String fileStr = files[i];
 			byte[] bytes = readFile(fileStr);
@@ -28,10 +34,14 @@ public class PCM {
 				for(int k=0;k<bytes.length;k++) {
 					byteList.add(bytes[k]);
 				}
-				for(int k=0;k<pause.length;k++) {
-					byteList.add(pause[k]);
+				//每遍单词之间延时pause秒，最后一遍不用延时
+				if(j<loop-1) {
+					for(int k=0;k<pause.length;k++) {
+						byteList.add(pause[k]);
+					}
 				}
 			}
+			//单词之间延时interval秒
 			for(int j=0;j<interval.length;j++) {
 				byteList.add(interval[j]);
 			}

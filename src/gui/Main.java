@@ -4,19 +4,33 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 
-import javax.swing.JDialog;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import bean.Param;
-import lame.MP32PCM;
-import lame.PCM;
 import util.Config;
+import util.FileUtil;
 
+/**
+ * 主窗体类
+ * 程序比较简单
+ * 基本这一个窗体就满足需求了
+ * @author wss
+ *
+ */
 public class Main extends JFrame{
 	
+	/**
+	 * 系统用到的一些参数变量
+	 */
+	//系统设置
 	public static Param param = null;
+	//字体大小
+	public final static float FONT_SIZE = 18f;
 	
 	/**
 	 * 程序入口
@@ -29,20 +43,32 @@ public class Main extends JFrame{
 	public Main() {
 		super();
 		
+		//加载系统参数
 		try {
 			param = Config.findParam();
 		} catch (Exception e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "原因:\r\n"+e.getMessage(),"获取参数失败",JOptionPane.ERROR_MESSAGE);
 		}
 		
-		//加载系统参数
-		//根据参数初始化系统
+		//初始化tmp目录
+		//tmp目录存放的是供lame操作的中间音频文件
+		File file = new File("./tmp");
+		try {
+			FileUtil.removeDir(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "原因:\r\n"+e.getMessage(),"初始化失败",JOptionPane.ERROR_MESSAGE);
+		}
 		
+		//根据参数初始化系统
 		this.setTitle("单词听写桌面版");
-		Dimension size = getToolkit().getScreenSize();
 		this.setSize(650,400);
+		ImageIcon icon = new ImageIcon("./images/logo.png");
+		this.setIconImage(icon.getImage());
+		//居中显示
 		this.setLocationRelativeTo(null);
-		this.setMinimumSize(new Dimension(500,400));
+		this.setMinimumSize(new Dimension(650,400));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
@@ -53,6 +79,7 @@ public class Main extends JFrame{
 		panel.add(new InputPanel());
 		panel.add(new OperatePanel(),BorderLayout.EAST);
 	    
+		//将面包添加到主窗体，并在四周留10的空白
 	    this.add(panel);
 	    this.add(createBlank(10,10),BorderLayout.SOUTH);
 	    this.add(createBlank(10,10),BorderLayout.NORTH);
@@ -81,6 +108,12 @@ public class Main extends JFrame{
 	
 }
 
+/**
+ * 主窗体状态监听
+ * 主要是在主窗体关闭时保存系统参数到参数文件
+ * @author wss
+ *
+ */
 class MainWindowListener implements WindowListener{
 	
 	private Param param = null;

@@ -33,6 +33,20 @@ public class FileUtil {
 	}
 	
 	/**
+	 * 删除指定目录下所有的文件
+	 * @param dir
+	 * @throws Exception
+	 */
+	public static void removeDir(File dir) throws Exception{
+		File[] files=dir.listFiles();
+		for(File file:files){
+			if(file.isFile()){
+				file.delete();
+			}
+		}
+	}
+	
+	/**
 	 * 将byte数组写入指定文件中
 	 * @param data
 	 * @param fileName

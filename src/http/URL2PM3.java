@@ -8,12 +8,14 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import gui.CallBack;
+
 /**
  * 将tts api的url下载为mp3文件
  * @author jie
  *
  */
-public class Url2Mp3 {
+public class URL2PM3 {
 	
 	//用来存放临时音频文件的文件夹
 	private static String tempPath = "./tmp/";
@@ -24,11 +26,13 @@ public class Url2Mp3 {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String[] download(String[] urls) throws Exception {
-		String[] files = new String[urls.length];
-		for(int i=0;i<urls.length;i++) {
+	public static String[] download(String[] urls,CallBack callBack) throws Exception {
+		int length = urls.length;
+		String[] files = new String[length];
+		for(int i=0;i<length;i++) {
 			files[i] = tempPath+i+".mp3";
 			download(urls[i],i+".mp3");
+			callBack.run(i+1, length);
 		}
 		return files;
 	}

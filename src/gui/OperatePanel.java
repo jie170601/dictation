@@ -76,10 +76,10 @@ public class OperatePanel extends JPanel{
 		panel.setPreferredSize(new Dimension(0,250));
 		panel.add(loop.getLabel());
 		panel.add(loopSlider);
-		panel.add(interval.getLabel());
-		panel.add(intervalSlider);
 		panel.add(pause.getLabel());
 		panel.add(pauseSlider);
+		panel.add(interval.getLabel());
+		panel.add(intervalSlider);
 		panel.add(randomBox);
 		panel.add(americanBox);
 		return panel;
@@ -93,7 +93,7 @@ public class OperatePanel extends JPanel{
 		JPanel panel = new JPanel(new BorderLayout());
 		JButton button = new JButton("…˙≥…“Ù∆µ");
 		panel.setPreferredSize(new Dimension(0,55));
-		button.setFont(button.getFont().deriveFont(18f));
+		button.setFont(button.getFont().deriveFont(Main.FONT_SIZE));
 		button.addActionListener(new MainButtonListener());
 		panel.add(button);
 		return panel;
@@ -106,7 +106,7 @@ public class OperatePanel extends JPanel{
 	 */
 	private JLabel createJLabel() {
 		JLabel label = new JLabel();
-		label.setFont(label.getFont().deriveFont(18f));
+		label.setFont(label.getFont().deriveFont(Main.FONT_SIZE));
 		return label;
 	}
 	
@@ -117,13 +117,13 @@ public class OperatePanel extends JPanel{
 	 */
 	private JLabel createJLabel(String text) {
 		JLabel label = new JLabel(text);
-		label.setFont(label.getFont().deriveFont(20f));
+		label.setFont(label.getFont().deriveFont(Main.FONT_SIZE));
 		return label;
 	}
 	
 	private JCheckBox createCheckBox(String text,boolean selected) {
 		JCheckBox checkBox = new JCheckBox(text,selected);
-		checkBox.setFont(checkBox.getFont().deriveFont(20f).deriveFont(Font.PLAIN));
+		checkBox.setFont(checkBox.getFont().deriveFont(Main.FONT_SIZE).deriveFont(Font.PLAIN));
 		return checkBox;
 	}
 	
@@ -146,7 +146,7 @@ class LabelComponent{
 	private JLabel label = new JLabel();
 	
 	public LabelComponent() {
-		label.setFont(label.getFont().deriveFont(20f).deriveFont(Font.PLAIN));
+		label.setFont(label.getFont().deriveFont(Main.FONT_SIZE).deriveFont(Font.PLAIN));
 	}
 	public void setText(String text) {
 		label.setText(text);
